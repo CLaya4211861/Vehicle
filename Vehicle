@@ -1,0 +1,75 @@
+import java.util.*;
+class Vehicle {
+    String name;
+    int year;
+    int price;
+    public Vehicle(String name, int year, int price) {
+        this.name = name;
+        this.year = year;
+        this.price = price;
+    }
+    public void display() {
+        System.out.println(name + " " + year + " " + price);
+    }
+    public int getYear() {
+        return year;
+    }
+    public int getPrice() {
+        return price;
+    }
+}
+public class AutoShopWorld {
+    static Map<String, String> users = new HashMap<>();
+    static List<Vehicle> vehicles = new ArrayList<>();
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        vehicles.add(new Vehicle("Toyota", 2019, 5000));
+        vehicles.add(new Vehicle("Suzuki", 2016, 3500));
+        vehicles.add(new Vehicle("Benz", 2021, 6000));
+        vehicles.add(new Vehicle("Kia", 2020, 4500));
+        System.out.println("Welcome to AUTOSHOP WORLD!!!");
+        System.out.println("Please signup with your details");
+        System.out.print("Please enter your first name: ");
+        String firstName = scanner.nextLine();
+        System.out.print("Please enter your second name: ");
+        String secondName = scanner.nextLine();
+        System.out.print("Please enter your username: ");
+        String username = scanner.nextLine();
+        System.out.print("Please enter your password: ");
+        String password = scanner.nextLine();
+        users.put(username, password);
+        System.out.println("Thank you… your registration success!!!");
+        System.out.println("Please sign in with your details");
+        System.out.print("Please enter your username: ");
+        String inputUsername = scanner.nextLine();
+        System.out.print("Please enter your password: ");
+        String inputPassword = scanner.nextLine();
+        if (users.containsKey(inputUsername) && users.get(inputUsername).equals(inputPassword)) {
+            System.out.println(inputUsername + "!!!! Welcome to Autoshop world");
+            System.out.println("\nList of Available Vehicles:");
+            for (Vehicle vehicle : vehicles) {
+                vehicle.display();
+            }
+            System.out.print("\nPlease enter your input to sort results\nEx: mfgyear or price: ");
+            String sortInput = scanner.nextLine();
+            if (sortInput.equalsIgnoreCase("mfgyear")) {
+                vehicles.sort(Comparator.comparingInt(Vehicle::getYear));
+                System.out.println("\nVehicles sorted by Manufacturing Year:");
+                for (Vehicle vehicle : vehicles) {
+                    vehicle.display();
+                }
+            } else if (sortInput.equalsIgnoreCase("price")) {
+                vehicles.sort(Comparator.comparingInt(Vehicle::getPrice));
+                System.out.println("\nVehicles sorted by Price (Low to High):");
+                for (Vehicle vehicle : vehicles) {
+                    vehicle.display();
+                }
+            } else {
+                System.out.println("Invalid input for sorting.");
+            }
+        } else {
+            System.out.println("Invalid username or password.");
+        }
+        scanner.close();
+    }
+}
